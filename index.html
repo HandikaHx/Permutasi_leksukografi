@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lexicographic Permutations</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      padding: 5px 0;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Lexicographic Permutations</h1>
+    <input id="input" type="text" placeholder="Enter input (numbers or letters only)">
+    <button id="generate">Generate Permutations</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const inputField = document.getElementById('input');
+    const generateButton = document.getElementById('generate');
+    const resultDiv = document.getElementById('result');
+
+    generateButton.addEventListener('click', () => {
+      const input = inputField.value.trim();
+      if (!input) {
+        alert('Please enter input');
+        return;
+      }
+
+      const isNumeric = /^\d+$/.test(input);
+      const isAlpha = /^[a-zA-Z]+$/.test(input);
+      if (!(isNumeric || isAlpha)) {
+        alert('Input must be either numbers only or letters only');
+        return;
+      }
+
+      const permutations = getPermutations(input);
+      resultDiv.innerHTML = '';
+      
+      let resultHTML = '<ul>';
+      permutations.forEach((permutation) => {
+        resultHTML += `<li>${permutation}</li>`;
+      });
+      resultHTML += '</ul>';
+      resultDiv.innerHTML = resultHTML;
+    });
+
+    function getPermutations(input) {
+      const inputArray = input.split('');
+      const permutations = [];
+
+      function permute(arr, m = []) {
+        if (arr.length === 0) {
+          permutations.push(m.join(''));
+        } else {
+          for (let i = 0; i < arr.length; i++) {
+            const curr = arr.slice();
+            const next = curr.splice(i, 1);
+            permute(curr, m.concat(next));
+          }
+        }
+      }
+
+      permute(inputArray, []);
+      return permutations.sort();
+    }
+  </script>
+</body>
+</html>
