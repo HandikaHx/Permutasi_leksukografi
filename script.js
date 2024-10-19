@@ -19,8 +19,8 @@ generateButton.addEventListener('click', () => {
   const permutations = getPermutations(input);
   resultDiv.innerHTML = '';
   
-  // Memperbaiki kode di sini
-  let resultHTML = '<ul>';  // Menggunakan 'let' untuk inisialisasi resultHTML dengan '<ul>'
+  
+  let resultHTML = '<ul>';  
   permutations.forEach((permutation) => {
     resultHTML += `<li>${permutation}</li>`;
   });
